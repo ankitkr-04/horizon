@@ -4,7 +4,7 @@ import TotalBalanceBox from '@/components/TotalBalanceBox'
 import React from 'react'
 
 const Home = () => {
-  const loggedIn = { firstName: 'Ankit', lastName: 'Kumar', email: 'ankit@lnct.ac.in'}
+  const loggedIn = { firstName: 'Ankit', lastName: 'Kumar', email: 'ankit@lnct.ac.in' }
 
   return (
     <section className='home'>
@@ -16,27 +16,28 @@ const Home = () => {
             user={loggedIn?.firstName || 'Guest'}
             subtext="Access and manage your account and transacation efficiently."
           />
-          <TotalBalanceBox 
-          accounts={[]}
-          totalBanks={0}
-          totalCurrentBalance={800.68}
+          <TotalBalanceBox
+            accounts={[]}
+            totalBanks={0}
+            totalCurrentBalance={800.68}
           />
         </header>
+        RECENT TRANSACTIONS
 
       </div>
       <RightSidebar
-      user={loggedIn}
-      transaction={[]}
-      banks={[{
-        $id: '1',
-        name: 'Bank of America',
-        currentBalance: 800.68,
-        mask: '1234',
-      }, {
-        $id: '2',
-        name: 'Chase Bank',
-        currentBalance: 968.68,
-      }]}
+        user={loggedIn}
+        transaction={[]}
+        banks={[{
+          $id: '1',
+          name: 'Bank of America',
+          currentBalance: 800.68,
+          mask: '1234',
+        }, {
+          $id: '2',
+          name: 'Chase Bank',
+          currentBalance: 968.68,
+        }]}
       />
     </section>
   )
