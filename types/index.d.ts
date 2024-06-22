@@ -8,14 +8,14 @@ declare type SearchParamProps = {
 // ========================================
 
 declare type SignUpParams = {
-  firstName?: string;
-  lastName?: string;
-  address1?: string;
-  city?: string;
-  state?: string;
-  postalCode?: string;
-  dateOfBirth?: string;
-  ssn?: string;
+  firstName: string;
+  lastName: string;
+  address1: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  dateOfBirth: string;
+  ssn: string;
   email: string;
   password: string;
 };
@@ -178,6 +178,11 @@ declare interface PlaidLinkProps {
   variant?: "primary" | "ghost";
   dwollaCustomerId?: string;
 }
+declare interface LinkTokenProps {
+
+  linkToken: string;
+
+}
 
 // declare type User = sdk.Models.Document & {
 //   accountId: string;
@@ -211,7 +216,7 @@ declare interface TotlaBalanceBoxProps {
 
 declare interface FooterProps {
   user: User;
-  type? : 'desktop' | 'mobile'
+  type?: 'desktop' | 'mobile'
 }
 
 declare interface RightSidebarProps {
