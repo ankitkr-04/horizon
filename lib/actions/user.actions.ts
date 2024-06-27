@@ -1,7 +1,7 @@
 'use server'
 
 import { cookies } from "next/headers"
-import { ID } from "node-appwrite"
+import { ID, Query } from "node-appwrite"
 import { createAdminClient, createSessionClient } from "../appwrite"
 import { encryptId, extractCustomerIdFromUrl, parseStringify } from "../utils"
 import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid"
@@ -13,7 +13,26 @@ const {
     APPWRITE_DATABASE_ID: DB_ID,
     APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
     APPWRITE_BANK_COLLECTION_ID: BANK_CPOLLECTION_ID,
-    APPWRITE_TRANSACTION_COLLECTION_ID: TRANSACTION_COLLECTION_ID, } = process.env;
+    APPWRITE_TRANSACTION_COLLECTION_ID: TRANSACTION_COLLECTION_ID,
+} = process.env;
+
+
+export const getUserInfo = async ({ userId }: getUserInfoProps) => {
+    try {
+        const { db } = await createAdminClient();
+        const user = await db.listDocuments(
+            DB_ID!,
+            USER_COLLECTION_ID!,
+            [Query.equal("userId", [userId])]
+
+
+        );
+        return parseStringify(user.documents[0]);
+    } catch (error) {
+        console.error("Error getting user info", error);
+    }
+}
+
 
 export const signIn = async (data: signInProps) => {
     try {
@@ -28,7 +47,9 @@ export const signIn = async (data: signInProps) => {
             secure: true,
         });
 
-        return session;
+        const user = await getUserInfo({ userId: session.userId });
+
+        return user;
 
     } catch (error) {
         console.error("Error signing in user", error)
@@ -40,13 +61,15 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     try {
         const { email, firstName, lastName } = userData;
         const { account, db } = await createAdminClient();
-
+        
         newUserAccount = await account.create(
             ID.unique(),
             email,
             password,
             `${firstName} ${lastName}`
         );
+
+        
 
         if (!newUserAccount) throw Error("Error creating user account");
 
@@ -58,7 +81,6 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
         if (!dwollaCustomerUrl) throw Error("Error creating dwolla customer");
 
         const dwollaCustomerId = extractCustomerIdFromUrl(dwollaCustomerUrl);
-
         const newUser = await db.createDocument(
             DB_ID!,
             USER_COLLECTION_ID!,
@@ -71,7 +93,16 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
             }
         )
 
-        const session = await signIn({ email, password });
+        const session = await account.createEmailPasswordSession(email, password);
+
+        cookies().set("appwrite-session", session.secret, {
+            path: "/",
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
+        });
+
+
 
         return parseStringify(newUser);
 
@@ -83,7 +114,10 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
 export const getLoggedInUser = async () => {
     try {
         const { account } = await createSessionClient();
-        return await account.get();
+        const res =  await account.get();
+        const user = await getUserInfo({ userId: res.$id });
+
+        return user;
     } catch (error) {
         return null;
     }
@@ -204,4 +238,38 @@ export const exchangePublicToken = async ({ publicToken, user }: exchangePublicT
     catch (error) {
         console.error("Error exchanging public token", error);
     }
+}
+
+
+export const getBanks = async ({ userId }: getBanksProps) => {
+    try {
+        const { db } = await createAdminClient();
+        const banks = await db.listDocuments(
+            DB_ID!,
+            BANK_CPOLLECTION_ID!,
+            [Query.equal("userId", [userId])]
+
+        );
+        return parseStringify(banks.documents);
+    } catch (error) {
+        throw new Error("Error getting banks");
+    }
+
+}
+
+export const getBank = async ({ documentId }: getBankProps) => {
+    try {
+        const { db } = await createAdminClient();
+
+        const banks = await db.listDocuments(
+            DB_ID!,
+            BANK_CPOLLECTION_ID!,
+            [Query.equal("$id", [documentId])]
+
+        );
+        return parseStringify(banks.documents[0]);
+    } catch (error) {
+        throw new Error("Error getting banks");
+    }
+
 }
