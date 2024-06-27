@@ -136,7 +136,7 @@ const AuthForm = ({ type }: { type: string }) => {
 
                             <CustomInput control={form.control} name='email' label="Email" placeholder='Enter your email' />
 
-                            <CustomInput control={form.control} name='password' label="Password" placeholder='Enter your password' />
+                            <CustomInput type='password' control={form.control} name='password' label="Password" placeholder='Enter your password' />
 
                             <div className="flex flex-col gap-4">
                                 <Button type="submit" disabled={loading} className="form-btn">
