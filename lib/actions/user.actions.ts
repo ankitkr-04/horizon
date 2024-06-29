@@ -13,7 +13,7 @@ const {
     APPWRITE_DATABASE_ID: DB_ID,
     APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
     APPWRITE_BANK_COLLECTION_ID: BANK_CPOLLECTION_ID,
-    APPWRITE_TRANSACTION_COLLECTION_ID: TRANSACTION_COLLECTION_ID,
+   
 } = process.env;
 
 
@@ -260,15 +260,34 @@ export const getBank = async ({ documentId }: getBankProps) => {
     try {
         const { db } = await createAdminClient();
 
-        const banks = await db.listDocuments(
+        const bank = await db.listDocuments(
             DB_ID!,
             BANK_CPOLLECTION_ID!,
             [Query.equal("$id", [documentId])]
 
         );
-        return parseStringify(banks.documents[0]);
+        return parseStringify(bank.documents[0]);
     } catch (error) {
-        throw new Error("Error getting banks");
+        throw new Error("Error getting bank");
+    }
+
+}
+
+export const getBankByAccountId = async ({ accountId }: getBankByAccountIdProps) => {
+    try {
+        const { db } = await createAdminClient();
+
+        const bank = await db.listDocuments(
+            DB_ID!,
+            BANK_CPOLLECTION_ID!,
+            [Query.equal("accountId", [accountId])]
+
+        );
+
+        if(bank.total !== 1) return null;
+        return parseStringify(bank.documents[0]);
+    } catch (error) {
+        throw new Error("Error getting bank");
     }
 
 }
