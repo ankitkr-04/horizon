@@ -48,7 +48,6 @@ export const signIn = async (data: signInProps) => {
         });
 
         const user = await getUserInfo({ userId: session.userId });
-
         return user;
 
     } catch (error) {

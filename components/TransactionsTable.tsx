@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { cn, formatAmount, formatDateTime, getTransactionStatus, removeSpecialCharacters } from '@/lib/utils'
 import { transactionCategoryStyles } from '@/constants'
 
@@ -42,7 +42,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                     return (
                         <TableRow
                         key={t.id} 
-                        className={`${isDebit || amount[0] === '-' ? 'bg-[#FFFBFA]' : 'bg-[#F6FEF9]'} !over:bg-none  !border-b-DEFAULT h-12`}
+                        className={`${isDebit || amount[0] === '-' ? 'bg-[#FFFBFA]' : 'bg-[#F6FEF9]'} !hover:bg-none  !border-b-DEFAULT h-12`}
                         >
                             <TableCell className="max-w-[250px] pl-2 pr-10">
                                 <div className='flex items-center gap-3'>
