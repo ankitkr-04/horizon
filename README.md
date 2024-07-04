@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Horizon
+
+Horizon is a web application built with Next.js, providing seamless real-time bank account transfers and financial management tools. The app leverages a variety of modern technologies to deliver a robust and user-friendly experience.
+
+## Features
+
+- **Real-time Bank Transfers:** Securely transfer funds between bank accounts in real-time using Dwolla and Plaid.
+- **Transaction Monitoring:** Monitor and manage transactions with detailed charts and analytics powered by Chart.js.
+- **User Authentication:** Secure user authentication and profile management.
+- **Error Tracking:** Integrated Sentry for real-time error monitoring and debugging.
+- **Rich User Interface:** Styled with Tailwind CSS, Tailwind Animate, and Shadcn for a modern, responsive design.
+- **Content Management:** Enhanced typography and layout with Tailwind Typography.
+- **Data Validation:** Ensure data integrity with Zod schemas.
+- **Backend Services:** Managed with Appwrite for database and storage.
+
+## Tech Stack
+
+- **Next.js:** Framework for server-side rendering and static site generation.
+- **Sentry:** Error tracking and monitoring.
+- **Dwolla:** Bank transfer API.
+- **Plaid:** Financial data aggregation and payment initiation.
+- **Shadcn:** UI components and design system.
+- **Chart.js:** Data visualization library.
+- **Appwrite:** Backend server for database and storage.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
+- **Tailwind Animate:** Animation utilities for Tailwind CSS.
+- **Tailwind Typography:** Typography utilities for Tailwind CSS.
+- **Zod:** Type-safe schema validation.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ensure you have the following installed:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js
+- npm or yarn
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
